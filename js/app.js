@@ -1,4 +1,4 @@
-import { DB } from './db.js';
+import { DB, syncFromCloud } from './db.js';
 import { SEED_DATA } from './data.js';
 import { today } from './utils.js';
 import { render as renderDashboard } from './views/dashboard.js';
@@ -56,7 +56,9 @@ function initDB() {
 
 window.addEventListener('hashchange', handleRoute);
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  // Pull latest data from Supabase first, then seed if needed, then render
+  await syncFromCloud();
   initDB();
 
   if (!window.location.hash) {
