@@ -1,5 +1,6 @@
 import { DB } from '../db.js';
 import { formatDate, showModal } from '../utils.js';
+import { getCardioMeta } from '../data.js';
 
 export function render(container) {
   const now = new Date();
@@ -7,59 +8,59 @@ export function render(container) {
 }
 
 function _render(container, year, month) {
-  const gymDays = DB.get('wt_gymDays') || [];
+  const gymDays    = DB.get('wt_gymDays')    || [];
   const workoutLog = DB.get('wt_workoutLog') || {};
 
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
+  const monthNames = ['January','February','March','April','May','June',
+    'July','August','September','October','November','December'];
 
   const todayStr = formatDate(new Date());
   const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
-
-  // Start on Monday: getDay() returns 0=Sun, shift so Mon=0
-  let startOffset = (firstDay.getDay() + 6) % 7; // Mon=0, Sun=6
+  const lastDay  = new Date(year, month + 1, 0);
+  const startOffset = (firstDay.getDay() + 6) % 7; // Mon=0
 
   // Month stats
-  let gymCount = 0, sportCount = 0, restCount = 0;
+  let gymCount = 0, cardioCount = 0, restCount = 0;
   for (const [dateStr, session] of Object.entries(workoutLog)) {
     const d = new Date(dateStr + 'T00:00:00');
-    if (d.getFullYear() === year && d.getMonth() === month) {
-      if (session.type === 'gym') gymCount++;
-      else if (session.type === 'rest') restCount++;
-      else sportCount++;
-    }
+    if (d.getFullYear() !== year || d.getMonth() !== month) continue;
+    if (session.type === 'gym') gymCount++;
+    else if (session.type === 'rest') restCount++;
+    else cardioCount++; // cardio, mobility, and any legacy subtype
   }
 
-  function getTypeColor(type) {
-    switch (type) {
-      case 'gym': return 'var(--success)';
-      case 'skating': return 'var(--info)';
-      case 'basketball': return 'var(--warning)';
-      case 'mobility': return 'var(--purple)';
-      case 'rest': return 'var(--text-muted)';
-      default: return 'transparent';
-    }
+  // Resolve colour for a session dot
+  function dotColor(session) {
+    if (!session) return 'transparent';
+    if (session.type === 'gym')      return 'var(--success)';
+    if (session.type === 'mobility') return 'var(--purple)';
+    if (session.type === 'rest')     return 'var(--text-muted)';
+    // cardio (new format stores subtype) or legacy direct type
+    const subtype = session.subtype || session.type;
+    const meta = getCardioMeta(subtype);
+    return meta ? meta.color : 'var(--info)';
   }
 
-  function getTypeLabel(session, gymDays) {
+  // Human-readable label for the detail modal title
+  function sessionLabel(session) {
     if (session.type === 'gym') {
       const day = gymDays.find(d => d.id === session.gymDayId);
       return day ? day.name : 'Gym';
     }
-    const labels = { skating: 'Skating', basketball: 'Basketball', mobility: 'Mobility', rest: 'Rest' };
-    return labels[session.type] || session.type;
+    if (session.type === 'mobility') return 'Mobility 🧘';
+    if (session.type === 'rest')     return 'Rest Day 😴';
+    const subtype = session.subtype || session.type;
+    const meta = getCardioMeta(subtype);
+    return meta ? `${meta.emoji} ${meta.label}` : 'Cardio';
   }
 
-  // Build cells
-  let cells = [];
-  for (let i = 0; i < startOffset; i++) cells.push(null);
-  for (let d = 1; d <= lastDay.getDate(); d++) cells.push(d);
-
+  // Build grid cells
+  const cells = [
+    ...Array(startOffset).fill(null),
+    ...Array.from({ length: lastDay.getDate() }, (_, i) => i + 1),
+  ];
   const rows = [];
-  for (let i = 0; i < cells.length; i += 7) {
-    rows.push(cells.slice(i, i + 7));
-  }
+  for (let i = 0; i < cells.length; i += 7) rows.push(cells.slice(i, i + 7));
 
   container.innerHTML = `
     <div class="view-header">
@@ -75,37 +76,25 @@ function _render(container, year, month) {
       </div>
 
       <div class="calendar-grid">
-        <div class="cal-header">Mon</div>
-        <div class="cal-header">Tue</div>
-        <div class="cal-header">Wed</div>
-        <div class="cal-header">Thu</div>
-        <div class="cal-header">Fri</div>
-        <div class="cal-header">Sat</div>
-        <div class="cal-header">Sun</div>
-
-        ${rows.map(row =>
-          row.map(day => {
-            if (!day) return `<div class="cal-cell cal-empty"></div>`;
-            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            const session = workoutLog[dateStr];
-            const isToday = dateStr === todayStr;
-            const color = session ? getTypeColor(session.type) : 'transparent';
-            return `
-              <div class="cal-cell ${isToday ? 'cal-today' : ''} ${session ? 'cal-has-log' : ''}"
-                   data-date="${dateStr}"
-                   style="${session ? `--dot-color:${color}` : ''}">
-                <span class="cal-day-num">${day}</span>
-                ${session ? `<div class="cal-dot" style="background:${color}"></div>` : ''}
-              </div>
-            `;
-          }).join('')
-        ).join('')}
+        ${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d => `<div class="cal-header">${d}</div>`).join('')}
+        ${rows.map(row => row.map(day => {
+          if (!day) return `<div class="cal-cell cal-empty"></div>`;
+          const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+          const session = workoutLog[dateStr];
+          const color   = dotColor(session);
+          return `
+            <div class="cal-cell ${dateStr === todayStr ? 'cal-today' : ''} ${session ? 'cal-has-log' : ''}"
+                 data-date="${dateStr}">
+              <span class="cal-day-num">${day}</span>
+              ${session ? `<div class="cal-dot" style="background:${color}"></div>` : ''}
+            </div>
+          `;
+        }).join('')).join('')}
       </div>
 
       <div class="cal-legend">
         <div class="legend-item"><span class="legend-dot" style="background:var(--success)"></span> Gym</div>
-        <div class="legend-item"><span class="legend-dot" style="background:var(--info)"></span> Skating</div>
-        <div class="legend-item"><span class="legend-dot" style="background:var(--warning)"></span> Basketball</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--info)"></span> Cardio</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--purple)"></span> Mobility</div>
         <div class="legend-item"><span class="legend-dot" style="background:var(--text-muted)"></span> Rest</div>
       </div>
@@ -117,8 +106,8 @@ function _render(container, year, month) {
         <div class="stat-label">Gym Days</div>
       </div>
       <div class="stat-card card">
-        <div class="stat-value" style="color:var(--info)">${sportCount}</div>
-        <div class="stat-label">Sport Days</div>
+        <div class="stat-value" style="color:var(--info)">${cardioCount}</div>
+        <div class="stat-label">Cardio Days</div>
       </div>
       <div class="stat-card card">
         <div class="stat-value" style="color:var(--text-muted)">${restCount}</div>
@@ -131,7 +120,6 @@ function _render(container, year, month) {
     const d = new Date(year, month - 1, 1);
     _render(container, d.getFullYear(), d.getMonth());
   });
-
   container.querySelector('#cal-next').addEventListener('click', () => {
     const d = new Date(year, month + 1, 1);
     _render(container, d.getFullYear(), d.getMonth());
@@ -143,44 +131,33 @@ function _render(container, year, month) {
       const session = workoutLog[dateStr];
       if (!session) return;
 
-      const d = new Date(dateStr + 'T00:00:00');
-      const dateLabel = d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-      const typeLabel = getTypeLabel(session, gymDays);
+      const dateLabel = new Date(dateStr + 'T00:00:00')
+        .toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      const label = sessionLabel(session);
 
-      let bodyHTML = `
-        <div class="log-detail">
-          <p><strong>Date:</strong> ${dateLabel}</p>
-          <p><strong>Activity:</strong> ${typeLabel}</p>
-      `;
+      let bodyHTML = `<div class="log-detail">
+        <p><strong>Date:</strong> ${dateLabel}</p>
+        <p><strong>Activity:</strong> ${label}</p>`;
 
       if (session.type === 'gym') {
         const gymDay = gymDays.find(d => d.id === session.gymDayId);
         if (gymDay) {
           bodyHTML += `<p><strong>Duration:</strong> ${session.duration || '?'} min</p>`;
           bodyHTML += `<p><strong>Exercises:</strong> ${session.exercisesDone || 0} / ${session.totalExercises || gymDay.exercises.length} completed</p>`;
-          if (session.exerciseStates) {
-            const doneExercises = gymDay.exercises.filter(ex =>
-              session.exerciseStates[ex.id]?.done
-            );
-            if (doneExercises.length > 0) {
-              bodyHTML += `<ul class="detail-list">${doneExercises.map(e => `<li>✓ ${e.name}</li>`).join('')}</ul>`;
-            }
-          }
+          const done = gymDay.exercises.filter(ex => session.exerciseStates?.[ex.id]?.done);
+          if (done.length) bodyHTML += `<ul class="detail-list">${done.map(e => `<li>✓ ${e.name}</li>`).join('')}</ul>`;
         }
       }
 
       bodyHTML += '</div>';
 
-      const idx = await showModal(typeLabel, bodyHTML, [
+      const idx = await showModal(label, bodyHTML, [
         { label: 'Close', type: 'secondary' },
-        { label: 'Delete Log', type: 'danger' }
+        { label: 'Delete Log', type: 'danger' },
       ]);
 
       if (idx === 1) {
-        DB.update('wt_workoutLog', log => {
-          delete log[dateStr];
-          return log;
-        });
+        DB.update('wt_workoutLog', log => { delete log[dateStr]; return log; });
         _render(container, year, month);
       }
     });

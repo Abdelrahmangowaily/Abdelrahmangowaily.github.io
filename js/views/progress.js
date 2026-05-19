@@ -1,5 +1,5 @@
 import { DB } from '../db.js';
-import { today, formatDate, showToast, showModal, generateId } from '../utils.js';
+import { today, formatDate, showToast, showModal, confirm, generateId } from '../utils.js';
 
 export function render(container) {
   const workoutLog = DB.get('wt_workoutLog') || {};
@@ -375,7 +375,6 @@ async function deleteSkill(container, skillId) {
   const skill  = skills.find(s => s.id === skillId);
   if (!skill) return;
 
-  const { confirm } = await import('../utils.js');
   const ok = await confirm(`Delete "${skill.name}" and all its logs?`);
   if (!ok) return;
 

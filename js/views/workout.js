@@ -1,26 +1,9 @@
 import { DB } from '../db.js';
 import { today, getDayName, showToast, showModal, generateId } from '../utils.js';
 import { navigate } from '../app.js';
+import { CARDIO_TYPES, getCardioMeta as getCardio } from '../data.js';
 
 let activeWorkout = null;
-
-// ── Cardio catalogue ────────────────────────────────────────────────────────
-const CARDIO_TYPES = [
-  { value: 'running',    label: 'Running',    emoji: '🏃', color: '#f97316' },
-  { value: 'padel',      label: 'Padel',      emoji: '🎾', color: '#22c55e' },
-  { value: 'basketball', label: 'Basketball', emoji: '🏀', color: '#f59e0b' },
-  { value: 'swimming',   label: 'Swimming',   emoji: '🏊', color: '#06b6d4' },
-  { value: 'skating',    label: 'Skating',    emoji: '🛼', color: '#3b82f6' },
-  { value: 'cycling',    label: 'Cycling',    emoji: '🚴', color: '#8b5cf6' },
-  { value: 'football',   label: 'Football',   emoji: '⚽', color: '#84cc16' },
-  { value: 'jump_rope',  label: 'Jump Rope',  emoji: '🪢', color: '#ec4899' },
-  { value: 'hiking',     label: 'Hiking',     emoji: '🥾', color: '#a16207' },
-  { value: 'yoga',       label: 'Yoga',       emoji: '🧘', color: '#10b981' },
-];
-
-function getCardio(value) {
-  return CARDIO_TYPES.find(c => c.value === value) || null;
-}
 
 export function render(container) {
   activeWorkout = null;

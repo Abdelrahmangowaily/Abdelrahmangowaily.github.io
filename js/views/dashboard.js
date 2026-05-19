@@ -1,6 +1,7 @@
 import { DB } from '../db.js';
 import { today, getDayName, formatDate } from '../utils.js';
 import { navigate } from '../app.js';
+import { getCardioMeta } from '../data.js';
 
 export function render(container) {
   const settings = DB.get('wt_settings') || {};
@@ -63,8 +64,23 @@ export function render(container) {
     .sort((a, b) => b[0].localeCompare(a[0]))
     .slice(0, 5);
 
-  const typeLabels = { gym: 'Gym', skating: 'Skating', basketball: 'Basketball', mobility: 'Mobility', rest: 'Rest Day' };
-  const typeIcons = { gym: '🏋️', skating: '🛼', basketball: '🏀', mobility: '🧘', rest: '😴' };
+  function sessionIcon(session) {
+    if (session.type === 'gym')      return '🏋️';
+    if (session.type === 'mobility') return '🧘';
+    if (session.type === 'rest')     return '😴';
+    const subtype = session.subtype || session.type;
+    return getCardioMeta(subtype)?.emoji || '🏃';
+  }
+  function sessionLabel(session) {
+    if (session.type === 'gym') {
+      const day = gymDays.find(d => d.id === session.gymDayId);
+      return day ? day.name : 'Gym';
+    }
+    if (session.type === 'mobility') return 'Mobility';
+    if (session.type === 'rest')     return 'Rest Day';
+    const subtype = session.subtype || session.type;
+    return getCardioMeta(subtype)?.label || 'Cardio';
+  }
 
   // Today's workout card
   let todayCard = '';
@@ -82,8 +98,9 @@ export function render(container) {
       </div>
     `;
   } else {
-    const specialLabel = scheduledDayId === 'skating' ? 'Skating Day 🛼'
-      : scheduledDayId === 'basketball' ? 'Basketball Day 🏀'
+    const cardioMeta   = getCardioMeta(scheduledDayId);
+    const specialLabel = scheduledDayId === 'mobility' ? 'Mobility Day 🧘'
+      : cardioMeta ? `${cardioMeta.label} Day ${cardioMeta.emoji}`
       : 'Rest Day 😴';
     todayCard = `
       <div class="card today-workout-card">
@@ -158,17 +175,19 @@ export function render(container) {
           <ul class="activity-list">
             ${recent.map(([dateStr, session]) => {
               const d = new Date(dateStr + 'T00:00:00');
-              const label = session.type === 'gym' && session.gymDayName
-                ? session.gymDayName
-                : typeLabels[session.type] || session.type;
+              const label = sessionLabel(session);
+              const icon  = sessionIcon(session);
+              const badge = session.type === 'gym'
+                ? `<span class="badge badge-success">Gym</span>`
+                : `<span class="badge badge-info">${label}</span>`;
               return `
                 <li class="activity-item">
-                  <span class="activity-icon">${typeIcons[session.type] || '🏃'}</span>
+                  <span class="activity-icon">${icon}</span>
                   <div class="activity-info">
                     <span class="activity-name">${label}</span>
                     <span class="activity-date text-muted">${d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
                   </div>
-                  ${session.type === 'gym' ? `<span class="badge badge-success">Gym</span>` : `<span class="badge badge-info">${typeLabels[session.type] || 'Activity'}</span>`}
+                  ${badge}
                 </li>
               `;
             }).join('')}
