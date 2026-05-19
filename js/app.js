@@ -6,7 +6,8 @@ import { render as renderProgram   } from './views/program.js';
 import { render as renderWorkout   } from './views/workout.js';
 import { render as renderCalendar  } from './views/calendar.js';
 import { render as renderNutrition } from './views/nutrition.js';
-import { render as renderProgress  } from './views/progress.js';
+import { render as renderProgress     } from './views/progress.js';
+import { render as renderLeaderboard  } from './views/leaderboard.js';
 
 // ── User colours (must match index.html) ────────────────────────────────────
 const USER_META = {
@@ -22,8 +23,9 @@ const routes = {
   '#program':   renderProgram,
   '#workout':   renderWorkout,
   '#calendar':  renderCalendar,
-  '#nutrition': renderNutrition,
-  '#progress':  renderProgress,
+  '#nutrition':    renderNutrition,
+  '#progress':     renderProgress,
+  '#leaderboard':  renderLeaderboard,
 };
 
 export function navigate(hash) {

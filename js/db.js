@@ -66,6 +66,28 @@ export async function syncFromCloud() {
   }
 }
 
+/**
+ * Fetch specific keys from Supabase directly (bypasses localStorage prefix).
+ * Used by the leaderboard to read all users' data in one shot.
+ */
+export async function fetchSnapshot(keys) {
+  const client = getClient();
+  if (!client) return {};
+  try {
+    const { data, error } = await client
+      .from('kv_store')
+      .select('id, value')
+      .in('id', keys);
+    if (error) { console.warn('[DB] fetchSnapshot error:', error.message); return {}; }
+    const result = {};
+    for (const row of (data || [])) result[row.id] = row.value;
+    return result;
+  } catch (e) {
+    console.warn('[DB] fetchSnapshot exception:', e);
+    return {};
+  }
+}
+
 export const DB = {
   get(key) {
     try { return JSON.parse(localStorage.getItem(k(key))); }
