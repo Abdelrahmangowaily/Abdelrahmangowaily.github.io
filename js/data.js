@@ -463,3 +463,38 @@ export const SEED_DATA = {
     }
   }
 };
+
+/** Blank starting state for every user except Boudy. */
+export const EMPTY_SEED_DATA = {
+  settings: {
+    startDate:      null,
+    targetCalories: 2400,
+    targetProtein:  160,
+    targetCarbs:    220,
+    targetFat:      70,
+    athleteWeight:  null,
+    athleteHeight:  null,
+  },
+  weekSchedule: {
+    monday:    null,
+    tuesday:   null,
+    wednesday: null,
+    thursday:  null,
+    friday:    null,
+    saturday:  null,
+    sunday:    null,
+  },
+  gymDays: [],
+  mealPlan: {
+    targetCalories: 2400,
+    targetProtein:  160,
+    targetCarbs:    220,
+    targetFat:      70,
+    meals: {
+      breakfast: [],
+      lunch:     [],
+      dinner:    [],
+      snacks:    [],
+    },
+  },
+};

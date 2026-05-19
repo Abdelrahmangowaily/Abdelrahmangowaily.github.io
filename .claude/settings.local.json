@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(Start-Process \"C:\\\\Users\\\\Administrator\\\\Documents\\\\07e0a4fb749a0768d3680b5242c1cb023279a0b3-1000x602.avif\")",
+      "PowerShell(Start-Process \"C:\\\\Users\\\\Administrator\\\\Documents\\\\07e0a4fb749a0768d3680b5242c1cb023279a0b3-1000x602.avif\")",
+      "mcp__Claude_in_Chrome__tabs_context_mcp"
+    ]
+  }
+}

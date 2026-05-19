@@ -3,66 +3,306 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Personal calisthenics hybrid training tracker — log workouts, nutrition, and progress.">
-  <title>Workout Tracker</title>
-
+  <title>Workout Tracker — Select User</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <link rel="stylesheet" href="css/style.css">
+    :root {
+      --bg:      #06202e;
+      --surface: #0a2d3e;
+      --border:  #0d3a50;
+      --text:    #e0f0f5;
+      --muted:   #5a8898;
+      --font:    'Inter', -apple-system, sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Background grid texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(10,184,212,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10,184,212,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .landing {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .landing-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+    }
+
+    .landing-logo {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #20c0c0;
+      margin-bottom: .25rem;
+    }
+
+    .landing-title {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #e0f0f5 30%, #20c0c0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .landing-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* User grid */
+    .user-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .user-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.75rem 1rem 1.5rem;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .user-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .2s ease;
+    }
+
+    .user-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      text-decoration: none;
+    }
+
+    .user-card:hover::before { opacity: 1; }
+
+    /* Per-user accent colors */
+    .user-card[data-user="boudy"]  { --u: #0ab8d4; }
+    .user-card[data-user="hamza"]  { --u: #e05040; }
+    .user-card[data-user="youssef"]{ --u: #8b5cf6; }
+    .user-card[data-user="boba"]   { --u: #1a9060; }
+    .user-card[data-user="xeina"]  { --u: #c89010; }
+
+    .user-card:hover {
+      border-color: var(--u);
+      box-shadow: 0 12px 40px rgba(0,0,0,.3), 0 0 0 1px var(--u), 0 0 24px color-mix(in srgb, var(--u) 30%, transparent);
+    }
+
+    .user-card::before {
+      background: radial-gradient(ellipse at top, color-mix(in srgb, var(--u) 12%, transparent), transparent 70%);
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--u) 80%, #000), var(--u));
+      box-shadow: 0 4px 16px color-mix(in srgb, var(--u) 35%, transparent);
+      transition: box-shadow .2s ease, transform .2s ease;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .user-card:hover .avatar {
+      box-shadow: 0 6px 24px color-mix(in srgb, var(--u) 50%, transparent);
+      transform: scale(1.08);
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .user-name {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+
+    .user-tag {
+      font-size: .7rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .user-arrow {
+      font-size: .8rem;
+      color: var(--u);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity .2s ease, transform .2s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .user-card:hover .user-arrow {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .landing-footer {
+      font-size: .75rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .user-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: .85rem;
+      }
+
+      /* Boudy gets full width on mobile to stand out */
+      .user-card:first-child {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        padding: 1.25rem 1.5rem;
+        gap: 1.25rem;
+        justify-content: flex-start;
+      }
+
+      .user-card:first-child .user-info { align-items: flex-start; }
+      .user-card:first-child .user-arrow { opacity: 1; transform: none; }
+
+      .avatar { width: 60px; height: 60px; font-size: 1.3rem; }
+
+      .landing-title { font-size: 2rem; }
+    }
+
+    @media (max-width: 400px) {
+      .user-grid { grid-template-columns: 1fr; }
+      .user-card:first-child { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
-  <div class="app-layout">
+  <div class="landing">
 
-    <!-- Sidebar / Bottom Nav -->
-    <nav class="sidebar" role="navigation" aria-label="Main navigation">
-      <div class="sidebar-logo">
-        <h1>Workout Tracker</h1>
-        <p>Calisthenics Hybrid Program</p>
-      </div>
-      <div class="sidebar-nav">
-        <a href="#dashboard" class="nav-link active" aria-label="Dashboard">
-          <span class="nav-icon">🏠</span>
-          <span>Dashboard</span>
-        </a>
-        <a href="#program" class="nav-link" aria-label="Training Program">
-          <span class="nav-icon">📋</span>
-          <span>Program</span>
-        </a>
-        <a href="#workout" class="nav-link" aria-label="Today's Workout">
-          <span class="nav-icon">💪</span>
-          <span>Today</span>
-        </a>
-        <a href="#calendar" class="nav-link" aria-label="Calendar">
-          <span class="nav-icon">📅</span>
-          <span>Calendar</span>
-        </a>
-        <a href="#nutrition" class="nav-link" aria-label="Nutrition">
-          <span class="nav-icon">🥗</span>
-          <span>Nutrition</span>
-        </a>
-        <a href="#progress" class="nav-link" aria-label="Progress">
-          <span class="nav-icon">📈</span>
-          <span>Progress</span>
-        </a>
-      </div>
-    </nav>
+    <header class="landing-header">
+      <p class="landing-logo">⚡ Workout Tracker</p>
+      <h1 class="landing-title">Who's training<br>today?</h1>
+      <p class="landing-sub">Select your profile to open your dashboard</p>
+    </header>
 
-    <!-- Main view -->
-    <main class="main-content" id="view" role="main" aria-live="polite">
-      <p style="color:var(--text-muted);padding:2rem;text-align:center">Loading...</p>
-    </main>
+    <div class="user-grid">
+
+      <a class="user-card" href="app.html?user=boudy" data-user="boudy">
+        <div class="avatar">B</div>
+        <div class="user-info">
+          <span class="user-name">Boudy</span>
+          <span class="user-tag">5-day program</span>
+        </div>
+        <span class="user-arrow">Open →</span>
+      </a>
+
+      <a class="user-card" href="app.html?user=hamza" data-user="hamza">
+        <div class="avatar">H</div>
+        <div class="user-info">
+          <span class="user-name">Hamza</span>
+          <span class="user-tag">Start training</span>
+        </div>
+        <span class="user-arrow">Open →</span>
+      </a>
+
+      <a class="user-card" href="app.html?user=youssef" data-user="youssef">
+        <div class="avatar">Y</div>
+        <div class="user-info">
+          <span class="user-name">Youssef</span>
+          <span class="user-tag">Start training</span>
+        </div>
+        <span class="user-arrow">Open →</span>
+      </a>
+
+      <a class="user-card" href="app.html?user=boba" data-user="boba">
+        <div class="avatar">Bo</div>
+        <div class="user-info">
+          <span class="user-name">Boba</span>
+          <span class="user-tag">Start training</span>
+        </div>
+        <span class="user-arrow">Open →</span>
+      </a>
+
+      <a class="user-card" href="app.html?user=xeina" data-user="xeina">
+        <div class="avatar">X</div>
+        <div class="user-info">
+          <span class="user-name">Xeina</span>
+          <span class="user-tag">Start training</span>
+        </div>
+        <span class="user-arrow">Open →</span>
+      </a>
+
+    </div>
+
+    <footer class="landing-footer">
+      Trusted community — no passwords, just progress.
+    </footer>
 
   </div>
-
-  <!-- Modal overlay -->
-  <div id="modal-overlay" role="dialog" aria-modal="true"></div>
-
-  <!-- Toast container -->
-  <div id="toasts" aria-live="assertive" aria-atomic="true"></div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script type="module" src="js/app.js"></script>
 </body>
 </html>
