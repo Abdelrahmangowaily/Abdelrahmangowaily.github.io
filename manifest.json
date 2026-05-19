@@ -1,0 +1,27 @@
+{
+  "name": "Workout Tracker",
+  "short_name": "Workout",
+  "description": "Personal fitness tracker — log workouts, nutrition, and progress",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#06202e",
+  "theme_color": "#0ab8d4",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["health", "fitness", "sports"]
+}
