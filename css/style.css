@@ -1029,6 +1029,183 @@ body.modal-open { overflow: hidden; }
   flex-wrap: wrap;
 }
 
+/* ── Activity log row (cardio / mobility / rest) ── */
+.activity-log-row {
+  display: flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+.activity-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  flex: 1;
+  min-width: 90px;
+  padding: .9rem .5rem;
+  border-radius: var(--radius-lg);
+  font-size: .82rem;
+  font-weight: 600;
+}
+
+.activity-btn-icon { font-size: 1.5rem; line-height: 1; }
+
+/* ── Cardio picker grid (inside modal) ── */
+.cardio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: .6rem;
+  margin-bottom: .5rem;
+}
+
+.cardio-pick-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .35rem;
+  padding: .9rem .4rem .75rem;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: border-color .15s, background .15s, transform .12s;
+  font-family: var(--font);
+}
+
+.cardio-pick-btn:hover {
+  border-color: var(--c, var(--accent));
+  background: color-mix(in srgb, var(--c, var(--accent)) 10%, transparent);
+  transform: translateY(-2px);
+}
+
+.cardio-pick-btn.selected {
+  border-color: var(--c, var(--accent));
+  background: color-mix(in srgb, var(--c, var(--accent)) 15%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, var(--accent)) 25%, transparent);
+}
+
+.cardio-pick-emoji { font-size: 1.75rem; line-height: 1; }
+.cardio-pick-label { font-size: .72rem; font-weight: 600; color: var(--text); text-align: center; }
+
+/* ── Skill tracker cards ── */
+.skill-card {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  margin-bottom: .85rem;
+  background: var(--bg-card);
+}
+
+.skill-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: .6rem;
+  flex-wrap: wrap;
+}
+
+.skill-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+.skill-card-name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.skill-unit-badge {
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 600;
+  padding: .15rem .5rem;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-radius: 99px;
+  width: fit-content;
+}
+
+.skill-card-actions {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+.skill-best {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text-muted);
+}
+.btn-ghost:hover { border-color: var(--danger); color: var(--danger); background: var(--danger-dim); }
+
+.skill-sparkline {
+  margin: .5rem 0 .6rem;
+  opacity: .85;
+}
+
+.skill-log-history {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  margin-top: .5rem;
+  border-top: 1px solid var(--border);
+  padding-top: .5rem;
+}
+
+.skill-log-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .8rem;
+  padding: .2rem 0;
+}
+
+.skill-log-date { color: var(--text-muted); }
+
+.skill-log-value {
+  font-weight: 700;
+  color: var(--accent);
+  font-family: 'SF Mono', 'Cascadia Code', monospace;
+}
+
+/* ── Unit toggle (radio pill group) ── */
+.unit-toggle {
+  display: flex;
+  gap: .5rem;
+}
+
+.unit-option {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .55rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: .9rem;
+  font-weight: 500;
+  transition: border-color .15s, background .15s;
+}
+
+.unit-option:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+.unit-option input { display: none; }
+
 /* =====================
    Calendar
    ===================== */
@@ -1567,9 +1744,16 @@ body.modal-open { overflow: hidden; }
   /* Start workout select readable */
   #workout-override { font-size: 1rem; min-height: 44px; }
 
-  /* Sport log buttons full-width on mobile */
-  .sport-log-btns { flex-direction: column; }
-  .sport-log-btns .btn { width: 100%; justify-content: center; }
+  /* Activity log buttons stack on mobile */
+  .activity-log-row { flex-direction: row; }
+  .activity-btn { flex: 1; min-width: 80px; }
+
+  /* Cardio grid 3 cols on mobile */
+  .cardio-grid { grid-template-columns: repeat(3, 1fr); }
+
+  /* Skill cards */
+  .skill-card-header { flex-direction: column; gap: .5rem; }
+  .skill-card-actions { width: 100%; justify-content: flex-start; }
 
   /* Nutrition table scroll */
   .meal-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
