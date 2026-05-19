@@ -284,19 +284,22 @@ function renderExerciseTracker(ex, state) {
       </div>
       <p class="exercise-track-notes text-muted">${ex.notes}</p>
 
-      <div class="set-bubbles">
-        ${state.sets.map((s, i) => `
-          <button class="set-bubble ${s.done ? 'set-done' : ''}" data-ex-id="${ex.id}" data-set-idx="${i}">
-            ${i + 1}
-          </button>
-        `).join('')}
+      <div class="set-bubbles-row">
+        <span class="set-bubbles-hint">Tap a set to log it</span>
+        <div class="set-bubbles">
+          ${state.sets.map((s, i) => `
+            <button class="set-bubble ${s.done ? 'set-done' : ''}" data-ex-id="${ex.id}" data-set-idx="${i}">
+              ${i + 1}
+            </button>
+          `).join('')}
+        </div>
       </div>
 
       ${state.sets.map((s, i) => `
         <div class="set-input-row ${s.done ? 'visible' : ''}" data-ex-id="${ex.id}" data-set-idx="${i}">
           <label>Set ${i + 1}</label>
-          <input type="text" class="form-input set-reps-input" data-ex-id="${ex.id}" data-set-idx="${i}" placeholder="reps" value="${s.reps}">
-          <input type="text" class="form-input set-weight-input" data-ex-id="${ex.id}" data-set-idx="${i}" placeholder="kg/lbs" value="${s.weight}">
+          <input type="number" inputmode="decimal" class="form-input set-reps-input" data-ex-id="${ex.id}" data-set-idx="${i}" placeholder="Reps" value="${s.reps}">
+          <input type="number" inputmode="decimal" class="form-input set-weight-input" data-ex-id="${ex.id}" data-set-idx="${i}" placeholder="kg / lbs" value="${s.weight}">
         </div>
       `).join('')}
     </div>

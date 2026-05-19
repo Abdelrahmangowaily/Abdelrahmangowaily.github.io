@@ -971,11 +971,22 @@ body.modal-open { overflow: hidden; }
   color: var(--text-muted);
 }
 
+.set-bubbles-row {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  margin-bottom: .5rem;
+}
+
+.set-bubbles-hint {
+  font-size: .72rem;
+  color: var(--text-muted);
+}
+
 .set-bubbles {
   display: flex;
   gap: .5rem;
   flex-wrap: wrap;
-  margin-bottom: .5rem;
 }
 
 .set-bubble {
@@ -1515,6 +1526,56 @@ body.modal-open { overflow: hidden; }
   .calendar-grid { gap: 3px; }
   .cal-cell { min-height: 40px; }
   .cal-day-num { font-size: .75rem; }
+
+  /* ── Workout: exercise tracker cards ── */
+  .exercise-track-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .45rem;
+  }
+
+  .exercise-done-label { width: 100%; }
+
+  .exercise-track-meta {
+    justify-content: flex-start;
+    padding-left: 1.75rem;
+    gap: .75rem;
+  }
+
+  .exercise-track-name { font-size: 1rem; }
+
+  /* Set input rows: wrap label + two inputs on narrow screens */
+  .set-input-row {
+    flex-wrap: wrap;
+    gap: .4rem .5rem;
+  }
+
+  .set-input-row label { min-width: auto; }
+
+  .set-input-row .form-input {
+    max-width: none;
+    flex: 1;
+    min-width: 80px;
+    font-size: .9rem;
+    min-height: 44px;
+  }
+
+  /* Week chip: slightly more readable labels */
+  .week-chip-label { font-size: .65rem; }
+  .week-chip-value { font-size: .65rem; }
+
+  /* Start workout select readable */
+  #workout-override { font-size: 1rem; min-height: 44px; }
+
+  /* Sport log buttons full-width on mobile */
+  .sport-log-btns { flex-direction: column; }
+  .sport-log-btns .btn { width: 100%; justify-content: center; }
+
+  /* Nutrition table scroll */
+  .meal-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Progress view: stat cards */
+  .progress-stats { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 480px) {
