@@ -1207,6 +1207,91 @@ body.modal-open { overflow: hidden; }
 .unit-option input { display: none; }
 
 /* =====================
+   Last Workouts Stack (dashboard)
+   ===================== */
+.last-workouts-stack {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.last-workout-item {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: .75rem 1rem;
+  transition: transform .15s, box-shadow .15s;
+}
+
+.last-workout-item:hover {
+  transform: translateX(3px);
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+
+.last-workout-color-bar {
+  width: 4px;
+  min-height: 36px;
+  border-radius: 99px;
+  background: var(--day-color, var(--accent));
+  flex-shrink: 0;
+}
+
+.last-workout-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+  min-width: 0;
+}
+
+.last-workout-name {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.last-workout-sub {
+  font-size: .78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.last-workout-meta {
+  font-size: .72rem;
+  color: var(--text-muted);
+}
+
+.last-workout-ago {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* =====================
+   Trained stamp (program)
+   ===================== */
+.trained-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  font-size: .68rem;
+  font-weight: 700;
+  padding: .2rem .55rem;
+  border-radius: 99px;
+  background: var(--success-dim);
+  color: var(--success);
+  border: 1px solid rgba(26,144,96,.25);
+  letter-spacing: .01em;
+}
+
+/* =====================
    Calendar
    ===================== */
 .calendar-nav {

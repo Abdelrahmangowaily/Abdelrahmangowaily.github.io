@@ -59,6 +59,21 @@ export function render(container) {
   const calPct = Math.min(100, Math.round((totalCals / targetCals) * 100));
   const protPct = Math.min(100, Math.round((totalProtein / targetProtein) * 100));
 
+  // Last 5 gym workouts for the stack
+  function daysAgo(dateStr) {
+    const diff = Math.round(
+      (new Date(todayStr + 'T00:00:00') - new Date(dateStr + 'T00:00:00')) / 86400000
+    );
+    if (diff === 0) return 'Today';
+    if (diff === 1) return 'Yesterday';
+    return `${diff} days ago`;
+  }
+
+  const lastWorkouts = logEntries
+    .filter(([, s]) => s.type === 'gym')
+    .sort((a, b) => b[0].localeCompare(a[0]))
+    .slice(0, 5);
+
   // Recent activity
   const recent = logEntries
     .sort((a, b) => b[0].localeCompare(a[0]))
@@ -125,6 +140,36 @@ export function render(container) {
       <h2 class="section-title">Today's Plan</h2>
       ${todayCard}
     </section>
+
+    ${lastWorkouts.length > 0 ? `
+    <section class="dashboard-last-workouts">
+      <h2 class="section-title">Last Workouts</h2>
+      <div class="last-workouts-stack">
+        ${lastWorkouts.map(([dateStr, session]) => {
+          const day = gymDays.find(d => d.id === session.gymDayId);
+          const name = day ? day.name : (session.gymDayName || 'Gym');
+          const color = day ? day.color : 'var(--accent)';
+          const sub = day ? day.subtitle : '';
+          const done = session.exercisesDone != null
+            ? `${session.exercisesDone}/${session.totalExercises} exercises`
+            : '';
+          const dur = session.duration ? `${session.duration} min` : '';
+          const meta = [done, dur].filter(Boolean).join(' · ');
+          return `
+            <div class="last-workout-item" style="--day-color:${color}">
+              <div class="last-workout-color-bar"></div>
+              <div class="last-workout-info">
+                <span class="last-workout-name">${name}</span>
+                ${sub ? `<span class="last-workout-sub">${sub}</span>` : ''}
+                ${meta ? `<span class="last-workout-meta">${meta}</span>` : ''}
+              </div>
+              <span class="last-workout-ago">${daysAgo(dateStr)}</span>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </section>
+    ` : ''}
 
     <section class="stats-row">
       <div class="stat-card card">

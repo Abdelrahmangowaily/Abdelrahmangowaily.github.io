@@ -1,12 +1,42 @@
 import { DB } from '../db.js';
-import { showModal, showToast, confirm, generateId } from '../utils.js';
+import { today, formatDate, showModal, showToast, confirm, generateId } from '../utils.js';
 
 export function render(container) {
   _render(container);
 }
 
 function _render(container) {
-  const gymDays = DB.get('wt_gymDays') || [];
+  const gymDays    = DB.get('wt_gymDays')    || [];
+  const workoutLog = DB.get('wt_workoutLog') || {};
+
+  // Build a map of gymDayId → most recent log date within last 7 days
+  const now = new Date();
+  const sevenDaysAgo = new Date(now);
+  sevenDaysAgo.setDate(now.getDate() - 7);
+
+  const recentlyTrained = {}; // dayId → dateStr of most recent session in last 7 days
+  for (const [dateStr, session] of Object.entries(workoutLog)) {
+    if (session.type !== 'gym') continue;
+    const d = new Date(dateStr + 'T00:00:00');
+    if (d < sevenDaysAgo) continue;
+    const prev = recentlyTrained[session.gymDayId];
+    if (!prev || dateStr > prev) recentlyTrained[session.gymDayId] = dateStr;
+  }
+
+  // Sort: untrained days first (preserving original order), trained days last (oldest first)
+  const todayStr = today();
+  function daysSince(dateStr) {
+    return Math.round((new Date(todayStr + 'T00:00:00') - new Date(dateStr + 'T00:00:00')) / 86400000);
+  }
+
+  const sortedDays = [...gymDays].sort((a, b) => {
+    const aDate = recentlyTrained[a.id];
+    const bDate = recentlyTrained[b.id];
+    if (!aDate && !bDate) return 0;       // both untrained → original order
+    if (!aDate) return -1;                // a untrained → a first
+    if (!bDate) return 1;                 // b untrained → b first
+    return aDate.localeCompare(bDate);    // both trained → least recent first
+  });
 
   const categoryColors = {
     skill: '#f59e0b',
@@ -25,7 +55,7 @@ function _render(container) {
     </div>
 
     <div class="program-days" id="program-days">
-      ${gymDays.map((day, dayIdx) => renderDayCard(day, dayIdx, categoryColors)).join('')}
+      ${sortedDays.map((day, dayIdx) => renderDayCard(day, dayIdx, categoryColors, recentlyTrained[day.id], daysSince)).join('')}
     </div>
 
     <div style="margin-top:1.5rem">
@@ -102,7 +132,12 @@ function _render(container) {
   });
 }
 
-function renderDayCard(day, dayIdx, categoryColors) {
+function renderDayCard(day, dayIdx, categoryColors, trainedDateStr, daysSinceFn) {
+  const trainedDays = trainedDateStr ? daysSinceFn(trainedDateStr) : null;
+  const trainedLabel = trainedDays === 0 ? 'Today'
+    : trainedDays === 1 ? 'Yesterday'
+    : trainedDays != null ? `${trainedDays}d ago` : null;
+
   return `
     <article class="day-card card" data-day-id="${day.id}">
       <div class="day-card-header" style="border-left: 4px solid ${day.color}">
@@ -115,6 +150,7 @@ function renderDayCard(day, dayIdx, categoryColors) {
           <div class="day-tags">
             <span class="badge" style="background:${day.color}22;color:${day.color}">${day.duration}</span>
             <span class="badge badge-muted">${day.exercises.length} exercises</span>
+            ${trainedLabel ? `<span class="trained-stamp">✓ ${trainedLabel}</span>` : ''}
           </div>
         </div>
         <div class="day-card-actions">
