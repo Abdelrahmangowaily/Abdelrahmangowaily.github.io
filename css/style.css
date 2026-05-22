@@ -42,6 +42,50 @@
 }
 
 /* =====================
+   Update banner (PWA)
+   ===================== */
+#update-banner {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-120px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  background: #0a2030;
+  border: 1.5px solid var(--accent);
+  color: #e0f0f5;
+  padding: .7rem 1.1rem;
+  border-radius: 99px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.35), 0 0 0 1px var(--accent);
+  font-size: .875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+  font-family: var(--font);
+}
+
+#update-banner.visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+#update-banner .update-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 99px;
+  padding: .3rem .85rem;
+  font-size: .8rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background .15s;
+}
+
+#update-banner .update-btn:hover { background: var(--accent-bright); }
+
+/* =====================
    Reset & Base
    ===================== */
 *, *::before, *::after {

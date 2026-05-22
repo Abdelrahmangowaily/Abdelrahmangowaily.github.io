@@ -82,7 +82,36 @@
   <script type="module" src="js/app.js?v=7"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        function offerUpdate(sw) {
+          const banner = document.createElement('div');
+          banner.id = 'update-banner';
+          banner.innerHTML = '⬆ New version available <button class="update-btn">Refresh</button>';
+          document.body.appendChild(banner);
+          requestAnimationFrame(() => banner.classList.add('visible'));
+          banner.querySelector('.update-btn').addEventListener('click', () => {
+            sw.postMessage({ type: 'SKIP_WAITING' });
+          });
+        }
+
+        // A SW is already waiting (app was open during a previous update)
+        if (reg.waiting) offerUpdate(reg.waiting);
+
+        // A new SW just downloaded
+        reg.addEventListener('updatefound', () => {
+          const sw = reg.installing;
+          sw.addEventListener('statechange', () => {
+            if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+              offerUpdate(sw);
+            }
+          });
+        });
+
+        // New SW activated → reload to use fresh files
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          window.location.reload();
+        });
+      });
     }
   </script>
 </body>

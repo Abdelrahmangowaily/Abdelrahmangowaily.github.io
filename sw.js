@@ -1,4 +1,4 @@
-const CACHE = 'workout-v7';
+const CACHE = 'workout-v8';
 
 const SHELL = [
   '/index.html',
@@ -19,52 +19,48 @@ const SHELL = [
   '/js/views/leaderboard.js',
 ];
 
-// Install: cache the app shell
+// Install: cache the app shell, but DON'T skipWaiting automatically —
+// we wait for the user to tap "Refresh" so we never interrupt an open session.
 self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())
-  );
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)));
 });
 
 // Activate: delete old caches
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
+});
+
+// Page sends { type: 'SKIP_WAITING' } when the user taps the banner
+self.addEventListener('message', e => {
+  if (e.data?.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
 // Fetch strategy:
 //   Supabase API calls  → network only (always live data)
-//   Google Fonts / CDN  → network first, cache fallback
-//   App shell files     → cache first, network fallback + update cache
+//   External CDN        → network first, cache fallback
+//   App shell files     → cache first, background refresh
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
 
-  // Always go to network for Supabase
   if (url.hostname.includes('supabase.co')) return;
 
-  // Network-first for external CDN (fonts, supabase JS lib)
   if (url.hostname !== self.location.hostname) {
     e.respondWith(
       fetch(e.request)
-        .then(res => {
-          const copy = res.clone();
-          caches.open(CACHE).then(c => c.put(e.request, copy));
-          return res;
-        })
+        .then(res => { caches.open(CACHE).then(c => c.put(e.request, res.clone())); return res; })
         .catch(() => caches.match(e.request))
     );
     return;
   }
 
-  // Cache-first for app shell
   e.respondWith(
     caches.match(e.request).then(cached => {
       const network = fetch(e.request).then(res => {
-        const copy = res.clone();
-        caches.open(CACHE).then(c => c.put(e.request, copy));
+        caches.open(CACHE).then(c => c.put(e.request, res.clone()));
         return res;
       });
       return cached || network;
