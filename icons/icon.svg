@@ -1,16 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <!-- Background -->
   <rect width="512" height="512" rx="114" fill="#06202e"/>
-  <!-- Glow -->
-  <circle cx="256" cy="256" r="180" fill="#0ab8d4" opacity=".07"/>
-  <!-- Left plate -->
-  <rect x="52" y="176" width="88" height="160" rx="20" fill="#0ab8d4"/>
-  <!-- Left collar -->
-  <rect x="140" y="208" width="44" height="96" rx="12" fill="#20c0c0"/>
-  <!-- Bar -->
-  <rect x="184" y="228" width="144" height="56" rx="10" fill="#20c0c0"/>
-  <!-- Right collar -->
-  <rect x="328" y="208" width="44" height="96" rx="12" fill="#20c0c0"/>
-  <!-- Right plate -->
-  <rect x="372" y="176" width="88" height="160" rx="20" fill="#0ab8d4"/>
+  <!-- Subtle glow -->
+  <circle cx="256" cy="310" r="180" fill="#0ab8d4" opacity=".06"/>
+  <!-- Head -->
+  <circle cx="256" cy="118" r="52" fill="#0ab8d4"/>
+  <!-- Neck -->
+  <rect x="244" y="168" width="24" height="22" fill="#0ab8d4"/>
+  <!-- Torso -->
+  <path d="M216 190 L296 190 L288 284 L224 284 Z" fill="#0ab8d4"/>
+  <!-- Left leg -->
+  <path d="M222 282 L256 278 L122 462 L72 462 Z" fill="#0ab8d4"/>
+  <!-- Right leg -->
+  <path d="M256 278 L290 282 L440 462 L390 462 Z" fill="#0ab8d4"/>
+  <!-- Left shoe -->
+  <ellipse cx="97" cy="462" rx="32" ry="14" fill="#0ab8d4"/>
+  <!-- Right shoe -->
+  <ellipse cx="415" cy="462" rx="32" ry="14" fill="#0ab8d4"/>
 </svg>
