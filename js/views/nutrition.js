@@ -1,5 +1,6 @@
 import { DB } from '../db.js';
 import { today, formatDate, showModal, showToast, confirm, generateId } from '../utils.js';
+import { navigate } from '../app.js';
 
 export function render(container) {
   _render(container, 'plan');
@@ -9,8 +10,11 @@ function _render(container, activeTab, logDate) {
   const date = logDate || today();
   container.innerHTML = `
     <div class="view-header">
-      <h1>Nutrition</h1>
-      <p class="text-muted">Meal planning and food logging</p>
+      <div class="view-header-text">
+        <h1>Nutrition</h1>
+        <p class="text-muted">Meal planning and food logging</p>
+      </div>
+      <button class="ranks-fab" id="ranks-fab-btn" title="Leaderboard">🏆</button>
     </div>
 
     <div class="tabs">
@@ -20,6 +24,8 @@ function _render(container, activeTab, logDate) {
 
     <div id="tab-content"></div>
   `;
+
+  container.querySelector('#ranks-fab-btn')?.addEventListener('click', () => navigate('#leaderboard'));
 
   container.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {

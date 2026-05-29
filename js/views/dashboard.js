@@ -132,8 +132,11 @@ export function render(container) {
 
   container.innerHTML = `
     <div class="view-header">
-      <h1>${greeting}</h1>
-      <p class="text-muted">${dateDisplay}</p>
+      <div class="view-header-text">
+        <h1>${greeting}</h1>
+        <p class="text-muted">${dateDisplay}</p>
+      </div>
+      <button class="ranks-fab" id="ranks-fab-btn" title="Leaderboard">🏆</button>
     </div>
 
     <section class="dashboard-today">
@@ -244,4 +247,5 @@ export function render(container) {
 
   container.querySelector('#dash-start-workout')?.addEventListener('click', () => navigate('#workout'));
   container.querySelector('#dash-log-food')?.addEventListener('click', () => navigate('#nutrition'));
+  container.querySelector('#ranks-fab-btn')?.addEventListener('click', () => navigate('#leaderboard'));
 }

@@ -1,5 +1,6 @@
 import { DB } from '../db.js';
 import { today, formatDate, showToast, showModal, confirm, generateId } from '../utils.js';
+import { navigate } from '../app.js';
 
 export function render(container) {
   const workoutLog = DB.get('wt_workoutLog') || {};
@@ -83,8 +84,11 @@ export function render(container) {
 
   container.innerHTML = `
     <div class="view-header">
-      <h1>Progress</h1>
-      <p class="text-muted">Track your gains over time</p>
+      <div class="view-header-text">
+        <h1>Progress</h1>
+        <p class="text-muted">Track your gains over time</p>
+      </div>
+      <button class="ranks-fab" id="ranks-fab-btn" title="Leaderboard">🏆</button>
     </div>
 
     <div class="stats-row">
@@ -197,6 +201,7 @@ export function render(container) {
   `;
 
   // ── Wire events ──────────────────────────────────────────────────────────
+  container.querySelector('#ranks-fab-btn')?.addEventListener('click', () => navigate('#leaderboard'));
   container.querySelector('#btn-add-skill').addEventListener('click', () => addSkill(container));
 
   container.querySelectorAll('.btn-log-skill').forEach(btn => {
