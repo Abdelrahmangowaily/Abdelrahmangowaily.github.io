@@ -33,7 +33,7 @@ export const SEED_DATA = {
           sets: '4',
           reps: '20-40 sec',
           notes: 'Skill priority — do first while fresh. Belly to wall, full lockout. Once you can hold 45+ sec, begin shoulder taps.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=chest+to+wall+handstand+tutorial+calisthenics',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=chest+to+wall+handstand+hold+tutorial+calisthenics',
           category: 'skill'
         },
         {
@@ -42,7 +42,7 @@ export const SEED_DATA = {
           sets: '4',
           reps: '5-10',
           notes: 'Feet elevated on bench. Aim for nose to floor. Progresses toward handstand push-ups.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=pike+push+up+tutorial+handstand+progression',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=pike+push+up+elevated+feet+handstand+progression',
           category: 'push'
         },
         {
@@ -51,43 +51,61 @@ export const SEED_DATA = {
           sets: '4',
           reps: '5-10',
           notes: 'Full ROM, shoulders below elbows at bottom. Use parallel bars if available; bench dips with feet elevated as regression.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=parallel+bar+dips+tutorial+calisthenics',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=parallel+bar+dips+full+rom+tutorial+calisthenics',
           category: 'push'
         },
         {
           id: 'day1_ex4',
-          name: 'Heel-Elevated Goblet Squat',
+          name: 'Heel-Elevated Goblet Squat / Box Squat',
           sets: '4',
           reps: '8-10',
           notes: 'Elevate heels ~2 cm. Sit to a box you can reach without losing posture; lower the box every 2-3 weeks as mobility improves.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=heel+elevated+goblet+squat+tutorial',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=heel+elevated+goblet+squat+box+squat+tutorial',
           category: 'legs'
         },
         {
           id: 'day1_ex5',
-          name: 'Face Pulls',
+          name: 'Skull Crushers',
           sets: '3',
-          reps: '12-15',
-          notes: 'Pull to face, elbows high, external rotation at end range. Key for rear delts and shoulder health.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=face+pull+exercise+tutorial+rear+delts',
+          reps: '8-12',
+          notes: 'EZ-bar or dumbbell. Lying on a bench, elbows fixed, lower weight to forehead or just behind. Direct tricep isolation, long-head emphasis.',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=skull+crushers+ez+bar+dumbbell+tricep+tutorial',
           category: 'accessory'
         },
         {
           id: 'day1_ex6',
-          name: 'Hollow Hold',
+          name: 'Face Pulls',
           sets: '3',
-          reps: '20-40 sec',
-          notes: 'Lower back glued to floor. Reduce arm/leg extension if you cannot maintain contact.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=hollow+body+hold+tutorial+calisthenics',
-          category: 'core'
+          reps: '12-15',
+          notes: 'Pull to face, elbows high, external rotation at end range. Key for rear delts and shoulder health.',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=face+pull+cable+band+rear+delt+external+rotation+tutorial',
+          category: 'accessory'
         },
         {
           id: 'day1_ex7',
+          name: 'Hollow Hold',
+          sets: '3',
+          reps: '20-40 sec',
+          notes: 'Lower back glued to floor. Reduce arm/leg extension if you cannot maintain contact. (Anti-extension)',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=hollow+body+hold+tutorial+anti+extension+core',
+          category: 'core'
+        },
+        {
+          id: 'day1_ex8',
           name: 'Hanging Knee Raises',
           sets: '3',
           reps: '8-12',
-          notes: 'Slow and controlled. Progresses to straight leg raises, then toes-to-bar.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=hanging+knee+raises+tutorial+core',
+          notes: 'Slow and controlled. Progresses to straight leg raises, then toes-to-bar. (Spinal flexion)',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=hanging+knee+raises+slow+controlled+tutorial',
+          category: 'core'
+        },
+        {
+          id: 'day1_ex9',
+          name: 'Dead Bug',
+          sets: '3',
+          reps: '8 per side',
+          notes: 'Lower back glued to floor throughout. Opposite arm/leg extends slowly. (Anti-extension / coordination)',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=dead+bug+exercise+tutorial+anti+extension+core',
           category: 'core'
         }
       ]
@@ -107,7 +125,7 @@ export const SEED_DATA = {
           sets: '3',
           reps: '20-45 sec',
           notes: 'Build grip and shoulder endurance. Active shoulders (slight pull-down from the bar) is the cue.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=dead+hang+active+shoulder+tutorial',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=dead+hang+active+shoulders+grip+tutorial',
           category: 'pull'
         },
         {
@@ -116,7 +134,7 @@ export const SEED_DATA = {
           sets: '5',
           reps: '3-6',
           notes: 'Choose the hardest variation you can do with good form: band-assisted → negatives (5 sec lowering) → full pull-ups. Stop 1 rep shy of failure.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=pull+up+progression+beginner+tutorial+calisthenics',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=pull+up+progression+band+assisted+negatives+calisthenics',
           category: 'pull'
         },
         {
@@ -125,7 +143,7 @@ export const SEED_DATA = {
           sets: '4',
           reps: '6-10',
           notes: 'Body as horizontal as possible. Feet elevated as you progress. Scapular retraction at the top.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=inverted+rows+tutorial+scapular+retraction',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=inverted+rows+horizontal+scapular+retraction+tutorial',
           category: 'pull'
         },
         {
@@ -133,8 +151,8 @@ export const SEED_DATA = {
           name: 'Romanian Deadlift',
           sets: '4',
           reps: '8-10',
-          notes: 'Soft knees, hinge at hips, feel the hamstring stretch. Doubles as hamstring mobility — go a bit deeper each week.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=romanian+deadlift+tutorial+hamstring',
+          notes: 'Soft knees, hinge at hips, feel the hamstring stretch. Trains hip-extension hamstring function; doubles as hamstring mobility — go a bit deeper each week.',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=romanian+deadlift+tutorial+hamstring+hip+hinge',
           category: 'legs'
         },
         {
@@ -143,7 +161,7 @@ export const SEED_DATA = {
           sets: '3',
           reps: '10-12',
           notes: 'Full ROM, slight pause at bottom. Helps fill the calisthenics biceps gap.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=dumbbell+bicep+curl+tutorial+form',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=standing+dumbbell+bicep+curl+full+rom+tutorial',
           category: 'accessory'
         },
         {
@@ -152,7 +170,7 @@ export const SEED_DATA = {
           sets: '4',
           reps: '12-15',
           notes: 'On a step for full ROM. Pause 1 sec at the top. Skating and basketball both load calves heavily.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=calf+raise+tutorial+step+full+rom',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=standing+calf+raise+step+full+rom+pause+tutorial',
           category: 'accessory'
         },
         {
@@ -160,8 +178,26 @@ export const SEED_DATA = {
           name: 'Hanging Leg Raises',
           sets: '3',
           reps: '6-10',
-          notes: 'Avoid swinging. Lower slowly.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=hanging+leg+raises+tutorial+no+swing',
+          notes: 'Straight legs if able. Avoid swinging. Lower slowly. (Spinal flexion, lower abs)',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=hanging+leg+raises+straight+legs+no+swing+tutorial',
+          category: 'core'
+        },
+        {
+          id: 'day2_ex8',
+          name: 'V-ups',
+          sets: '3',
+          reps: '8-12',
+          notes: 'Lying on back, simultaneously raise legs and torso to meet over middle. Slow descent. (Dynamic spinal flexion)',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=v+ups+exercise+tutorial+core+spinal+flexion',
+          category: 'core'
+        },
+        {
+          id: 'day2_ex9',
+          name: 'Suitcase Carry',
+          sets: '3',
+          reps: '30-40 sec per side',
+          notes: 'Heavy dumbbell in one hand. Walk staying tall, do not lean. (Anti-lateral flexion core + grip + posture)',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=suitcase+carry+dumbbell+anti+lateral+flexion+tutorial',
           category: 'core'
         }
       ]
@@ -181,16 +217,16 @@ export const SEED_DATA = {
           sets: '4',
           reps: '6-12',
           notes: 'Pick the hardest variation where you can hit the rep range with good form. Progression: decline → diamond → archer. Full chest-to-floor depth.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=push+up+progressions+decline+diamond+archer+calisthenics',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=push+up+progression+decline+diamond+archer+calisthenics',
           category: 'push'
         },
         {
           id: 'day3_ex2',
-          name: 'Ring Push-ups / Deficit Push-ups',
+          name: 'Pseudo Planche Push-ups',
           sets: '3',
-          reps: '8-12',
-          notes: 'Adds instability and ROM. Rings preferred if available.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=ring+push+up+tutorial+calisthenics',
+          reps: '6-10',
+          notes: 'Hands lower (waist level), fingers angled slightly back if wrists allow, lean forward so shoulders pass over hands. Trains planche progression.',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=pseudo+planche+push+up+tutorial+planche+progression',
           category: 'push'
         },
         {
@@ -199,7 +235,7 @@ export const SEED_DATA = {
           sets: '4',
           reps: '8-10 per leg',
           notes: 'Excellent for skating and basketball. Front shin can travel forward. Hold dumbbells if needed for progression.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=bulgarian+split+squat+tutorial+form',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=bulgarian+split+squat+rear+foot+elevated+tutorial',
           category: 'legs'
         },
         {
@@ -208,43 +244,61 @@ export const SEED_DATA = {
           sets: '3',
           reps: '10 per leg',
           notes: 'Step back, knee lightly taps floor. Slower than forward lunges, easier on the knees.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=reverse+lunge+tutorial+form',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=reverse+lunge+tutorial+proper+form+knee',
           category: 'legs'
         },
         {
           id: 'day3_ex5',
-          name: 'Lateral Raises',
+          name: 'Overhead Tricep Extension',
           sets: '3',
-          reps: '12-15',
-          notes: 'Lateral delts are hard to hit with calisthenics. Slow tempo.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=lateral+raise+dumbbell+tutorial+slow+tempo',
+          reps: '10-12',
+          notes: 'Two hands on one dumbbell, elbows close to head, lower behind head. Hits long head of triceps in stretched position — different stimulus from skull crushers.',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=overhead+dumbbell+tricep+extension+two+handed+long+head',
           category: 'accessory'
         },
         {
           id: 'day3_ex6',
-          name: 'Band Pull-aparts',
+          name: 'Lateral Raises',
           sets: '3',
-          reps: '15-20',
-          notes: 'Rear delt + scapular control. Daily-able if shoulders feel tight.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=band+pull+apart+tutorial+rear+delt',
+          reps: '12-15',
+          notes: 'Lateral delts are hard to hit with calisthenics. Slow tempo.',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=lateral+raise+dumbbell+slow+tempo+lateral+delt+tutorial',
           category: 'accessory'
         },
         {
           id: 'day3_ex7',
-          name: 'Side Plank',
+          name: 'Band Pull-aparts',
           sets: '3',
-          reps: '20-40 sec per side',
-          notes: 'Resist the hip dropping. Crucial for skating lateral stability.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=side+plank+tutorial+proper+form',
-          category: 'core'
+          reps: '15-20',
+          notes: 'Rear delt + scapular control. Daily-able if shoulders feel tight.',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=band+pull+apart+rear+delt+scapular+control+tutorial',
+          category: 'accessory'
         },
         {
           id: 'day3_ex8',
-          name: 'Ab Wheel Rollouts',
+          name: 'Side Plank',
+          sets: '3',
+          reps: '20-40 sec per side',
+          notes: 'Resist the hip dropping. Crucial for skating lateral stability. (Anti-lateral flexion)',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=side+plank+anti+lateral+flexion+skating+tutorial',
+          category: 'core'
+        },
+        {
+          id: 'day3_ex9',
+          name: 'Ab Wheel Rollouts / Long Lever Plank',
           sets: '3',
           reps: '6-10',
-          notes: 'If no ab wheel, use a barbell with plates. Stay in posterior tilt.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=ab+wheel+rollout+tutorial+form',
+          notes: 'If no ab wheel, use a barbell with plates. Stay in posterior tilt. (Anti-extension)',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=ab+wheel+rollout+tutorial+posterior+tilt+anti+extension',
+          category: 'core'
+        },
+        {
+          id: 'day3_ex10',
+          name: 'Reverse Crunches',
+          sets: '3',
+          reps: '10-15',
+          notes: 'Lying on back, lift hips off floor by curling pelvis toward chest. Slow, no momentum. (Lower abs / posterior pelvic tilt)',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=reverse+crunch+tutorial+lower+abs+pelvic+tilt',
           category: 'core'
         }
       ]
@@ -264,7 +318,7 @@ export const SEED_DATA = {
           sets: '4',
           reps: '5-10 sec hold',
           notes: 'Skill priority — first while fresh. Active scaps, posterior pelvic tilt, full body line. Progression: tuck → adv. tuck → straddle.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=front+lever+tutorial+progression+tuck+calisthenics',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=front+lever+progression+tuck+advanced+tuck+straddle+tutorial',
           category: 'skill'
         },
         {
@@ -273,16 +327,16 @@ export const SEED_DATA = {
           sets: '4',
           reps: '4-8',
           notes: 'Underhand grip — hits biceps harder than pull-ups. Pause at the top. Use negatives if needed.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=chin+up+tutorial+underhand+grip+biceps',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=chin+up+underhand+grip+biceps+pause+tutorial',
           category: 'pull'
         },
         {
           id: 'day4_ex3',
-          name: 'Ring Rows / Bent-over Rows',
+          name: 'Bent-over Row / Chest-supported Row',
           sets: '4',
           reps: '8-10',
-          notes: 'Different angle from Day 2 rows. Squeeze shoulder blades hard at top.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=ring+rows+tutorial+scapular+squeeze',
+          notes: 'Bent-over: hinge ~45°, pull to lower ribs. Chest-supported: lie face-down on incline bench, pull dumbbells to ribs — less lower-back fatigue.',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=bent+over+barbell+row+chest+supported+dumbbell+row+tutorial',
           category: 'pull'
         },
         {
@@ -291,43 +345,61 @@ export const SEED_DATA = {
           sets: '3',
           reps: '10-12',
           notes: 'Posterior pelvic tilt at the top, do not hyperextend the lower back. Single-leg variation for progression.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=hip+thrust+tutorial+glutes+form',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=hip+thrust+glutes+posterior+pelvic+tilt+tutorial',
           category: 'legs'
         },
         {
           id: 'day4_ex5',
-          name: 'Hammer Curls',
+          name: 'Nordic Curl Progression',
           sets: '3',
-          reps: '10-12',
-          notes: 'Different angle from Day 2 curls — targets brachialis.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=hammer+curl+tutorial+brachialis',
-          category: 'accessory'
+          reps: '4-8',
+          notes: 'Anchor feet under a bench. Lower torso slowly (5+ sec eccentric); use hands to push back up. Start with band-assisted or 3-sec negatives. Trains knee-flexion hamstring function.',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=nordic+curl+progression+eccentric+hamstring+tutorial',
+          category: 'legs'
         },
         {
           id: 'day4_ex6',
-          name: 'Seated Calf Raise',
+          name: 'Hammer Curls',
           sets: '3',
-          reps: '12-15',
-          notes: 'Different stimulus from Day 2 calf work.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=seated+calf+raise+tutorial',
+          reps: '10-12',
+          notes: 'Neutral grip — targets brachialis. Different stimulus from Day 2 curls.',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=hammer+curl+neutral+grip+brachialis+tutorial',
           category: 'accessory'
         },
         {
           id: 'day4_ex7',
-          name: 'L-sit Progression',
-          sets: '4',
-          reps: '10-20 sec',
-          notes: 'On parallettes, dip bars, or floor. Active shoulders, knees high. Progression: tuck → one-leg → full L-sit.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=l+sit+progression+tutorial+calisthenics',
-          category: 'skill'
+          name: 'Seated / Single-leg Calf Raise',
+          sets: '3',
+          reps: '12-15',
+          notes: 'Different stimulus from Day 2 calf work (more soleus when seated).',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=seated+calf+raise+soleus+single+leg+tutorial',
+          category: 'accessory'
         },
         {
           id: 'day4_ex8',
+          name: 'L-sit Progression',
+          sets: '4',
+          reps: '10-20 sec',
+          notes: 'On parallettes, dip bars, or floor. Active shoulders, knees high. Progression: tuck → one-leg → full L-sit. (Anti-extension + hip flexor strength)',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=l+sit+progression+tuck+full+parallettes+tutorial',
+          category: 'skill'
+        },
+        {
+          id: 'day4_ex9',
           name: 'Pallof Press',
           sets: '3',
           reps: '10 per side',
-          notes: 'Anti-rotation core. Slow, resist the pull.',
-          youtubeUrl: 'https://www.youtube.com/results?search_query=pallof+press+tutorial+anti+rotation+core',
+          notes: 'Band or cable. Anti-rotation core. Slow, resist the pull.',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=pallof+press+anti+rotation+core+cable+band+tutorial',
+          category: 'core'
+        },
+        {
+          id: 'day4_ex10',
+          name: 'Cable / Band Woodchops',
+          sets: '3',
+          reps: '10 per side',
+          notes: 'High-to-low rotational pull across the body. Critical for basketball passing and skating crossovers. (Rotational core)',
+          youtubeUrl: 'https://www.youtube.com/results?search_query=cable+band+woodchop+rotational+core+tutorial',
           category: 'core'
         }
       ]
